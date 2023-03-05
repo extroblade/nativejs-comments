@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="src/styles/styles.css">
+    <title>Comments</title>
+</head>
+<body>
+    <div class="content">
+        <button onclick='clearLS()'>clear local storage</button>
+        
+        <form class="form">            
+            <h2>Create comment</h2>
+    
+            <input
+                class="form__author input"
+                type="text"
+                placeholder="Name Surname"
+            >
+    
+            <textarea class="form__comment input" type="text"></textarea>
+    
+            <input
+                placeholder="Date"
+                class="form__date input"
+                type="date"
+            >
+    
+            <div class="form__alert">
+                <p></p>
+            </div>
+    
+            <button
+                type="button"
+                class="form__submit btn"
+            >
+                Submit
+            </button>
+    
+            <button class="form__reset btn">
+                Reset
+            </button>
+        </form>
+    
+        <div class="comments">
+    
+        </div>
+    </div>
+    
+    <script src="src/script.js"></script>
+</body>
+</html>
