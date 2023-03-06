@@ -15,9 +15,9 @@ const day = 1000 * 60 * 60 * 24
 form_date.valueAsDate = new Date()
 
 let date = Date.parse(form_date.value)
-let now = Date.now() + 3600000*4
+let now = Date.now()
 let dif = Date.now() - date
-
+let nowD = new Date(now)
 author.onchange = validate
 comment.onchange = validate
 
@@ -25,12 +25,10 @@ comment.onchange = validate
 loadComs()
 
 
-function timeChanger(time) {
+function timeChanger(time, h, m) {
     const hrs = now - time
     
     let days = Math.floor(hrs / day)
-    let h = Math.floor(hrs / (1000 * 60 * 60) % 24)
-    let m = Math.floor((dif / (1000 * 60)) % 60)
     let hours = h < 10 ? `0${h}` : h
     let minutes = m < 10 ? `0${m}` : m
     let hoursAndMinutes = ` ${hours}:${minutes}`
@@ -53,6 +51,8 @@ function submit(){
         time : Date.parse(form_date.value),
         likes: 0,
         pressed: false,
+        hours: nowD.getHours(),
+        minutes: nowD.getMinutes()
     }
 
     if(com.author && com.comment){
@@ -76,7 +76,6 @@ comment.onkeydown = function(e){
     if (e.keyCode == 13) submit()
 }
 
-//${timeChanger(item.likes)}
 
 function showComs() {
     if (comments != null){
@@ -84,13 +83,13 @@ function showComs() {
         comments.map(item => {
             out += `<div class='comment'>\
                 <div><button class='comment__like-btn'>\
-                <img src="src/static/like.png" alt="like">\
+                <img src="src/static/like${item.pressed ? 'd' : ''}.png" alt="like">\
                 <p>${item.likes}</p>\
                 </button>\
                 <button class='comment__delete-btn'>\
                 <img src="src/static/trash.png" alt="delete">\
                 </button></div>\
-                <p class="comment__date">${timeChanger(item.time)}</p>\
+                <p class="comment__date">${timeChanger(item.time, item.hours, item.minutes)}</p>\
                 <p class="comment__author">${(item.author)}</p>\
                 <p class="comment__comment">${(item.comment)}</p>\
                 </div>`
@@ -147,20 +146,23 @@ let likeBtnsP = Array.from(document.querySelectorAll(".comment__like-btn p"))
 console.log(comments)
 
 
-function showLikes() {
-    likeBtnsP.map(i => {
-        i.innerHTML = (i.likes)
-    })
-}
+
 
 for (let i = 0; i < likeBtns.length; i++) {
     likeBtns[i].onclick = function() {
 
         comments[i].pressed = !comments[i].pressed;
-        comments[i].pressed ? comments[i].likes++ : comments[i].likes--;
-           
+
+        if(comments[i].pressed){
+            comments[i].likes++
+            likeBtns[i].classList.add("liked");
+        } else {
+            comments[i].likes--
+            likeBtns[i].classList.remove("liked");
+        }
         clearLS()
         saveComs()
+        showComs()
     }
 }
 
