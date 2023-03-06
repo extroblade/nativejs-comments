@@ -1,10 +1,124 @@
 
-document.querySelector('.form__date').valueAsDate = new Date();
-let inputs = Array.from(document.querySelectorAll(".input"))
-
 let comments = []
 
+const form = document.querySelector('.form')
+const form_submit = document.querySelector('.form__submit')
+const form_date = document.querySelector('.form__date')
+const inputs = Array.from(document.querySelectorAll(".input"))
+const author = document.querySelector('.form__author')
+const comment = document.querySelector('.form__comment')
+const validator = document.querySelector(".form__alert p")
+const comField = document.querySelector('.comments')
+
+const day = 1000 * 60 * 60 * 24
+
+form_date.valueAsDate = new Date()
+
+let date = Date.parse(form_date.value)
+let now = Date.now() + 3600000*4
+let dif = Date.now() - date
+
+author.onchange = validate
+comment.onchange = validate
+
+
 loadComs()
+
+
+function timeChanger(time) {
+    const hrs = now - time
+    
+    let days = Math.floor(hrs / day)
+    let h = Math.floor(hrs / (1000 * 60 * 60) % 24)
+    let m = Math.floor((dif / (1000 * 60)) % 60)
+    let hours = h < 10 ? `0${h}` : h
+    let minutes = m < 10 ? `0${m}` : m
+    let hoursAndMinutes = ` ${hours}:${minutes}`
+    
+    if (now-time < day ){
+        time = 'today,'
+    } else if (now-time >= day && hrs <= day*2) {
+        time = 'yesterday,'
+    } else time = `${days} days ago,`
+
+    return time+hoursAndMinutes
+}
+
+
+function submit(){
+    validate()
+    let com = {
+        author : author.value,
+        comment : comment.value,
+        time : Date.parse(form_date.value),
+        likes: 0,
+        pressed: false,
+    }
+
+    if(com.author && com.comment){
+        comments.push(com)
+        saveComs()
+    }
+
+    showComs()
+}
+
+
+form_submit.onclick = submit
+
+
+author.onkeydown= function(e){
+    if (e.keyCode == 13) submit()
+}
+
+
+comment.onkeydown = function(e){
+    if (e.keyCode == 13) submit()
+}
+
+//${timeChanger(item.likes)}
+
+function showComs() {
+    if (comments != null){
+        let out = ''
+        comments.map(item => {
+            out += `<div class='comment'>\
+                <div><button class='comment__like-btn'>\
+                <img src="src/static/like.png" alt="like">\
+                <p>${item.likes}</p>\
+                </button>\
+                <button class='comment__delete-btn'>\
+                <img src="src/static/trash.png" alt="delete">\
+                </button></div>\
+                <p class="comment__date">${timeChanger(item.time)}</p>\
+                <p class="comment__author">${(item.author)}</p>\
+                <p class="comment__comment">${(item.comment)}</p>\
+                </div>`
+        })
+    
+        comField.innerHTML = out
+    }
+}
+
+
+function saveComs() {
+    localStorage.setItem('comments', JSON.stringify(comments))
+}
+
+
+function loadComs() {
+    if (JSON.parse(localStorage.getItem('comments'))) {
+        comments = JSON.parse(localStorage.getItem('comments'))
+        showComs()
+    }
+    
+}
+
+
+function clearLS() {
+    localStorage.clear()
+}
+
 
 function validate() {
     let textctr=0;
@@ -19,91 +133,48 @@ function validate() {
     })
 
     if (textctr) {
-        document.querySelector(".form__alert p").innerHTML = "Input not valid"
+        validator.innerHTML = "Input not valid"
+        return false
     } else {
-        document.querySelector(".form__alert p").innerHTML = "Added successfully"
+        validator.innerHTML = "Added successfully"
+        return true
     }
 }
 
 
-document.querySelector('.form__submit').onclick = function(e){
-    e.preventDefault();
-    validate() 
+let likeBtns = Array.from(document.querySelectorAll(".comment__like-btn"))
+let likeBtnsP = Array.from(document.querySelectorAll(".comment__like-btn p"))
+console.log(comments)
 
-    let author = document.querySelector('.form__author')
-    let comment = document.querySelector('.form__comment')
-    let date = Date.parse(document.querySelector('.form__date').value)
-    let now = new Date()
-    const hours = now.getHours() < 10 ? `0${now.getHours()}` : now.getHours()
-    const minutes = now.getMinutes() < 10 ? `0${now.getMinutes()}` : now.getMinutes()
-    const hoursAndMinutes = ` ${hours}:${minutes}`;
-    let dif = Date.now() - date
-    let day = 86400000
-    let days = Math.round(dif / day)
 
-    if (dif < day ){
-        date = 'today,'
-    } else if (dif >= day && dif <= day*2) {
-        date = 'yesterday,'
-    } else date = `${days} days ago,`
-
-    let com = {
-        author : author.value,
-        comment : comment.value,
-        time : date+hoursAndMinutes,
-    }
-
-    if(com.author && com.comment){
-        comments.push(com)
-        saveComs();
-    }
-
-    showComs();
-
-}
-
-function showComs() {
-    let comField = document.querySelector('.comments')
-
-    let out = '';
-
-    comments.map(item => {
-        out += `<div class='comment'><p class="comment__date">${(item.time)}</p>`
-        out += `<p class="comment__author">${(item.author)}</p>`
-        out += `<p class="comment__comment">${(item.comment)}</p></div>`
+function showLikes() {
+    likeBtnsP.map(i => {
+        i.innerHTML = (i.likes)
     })
-
-    comField.innerHTML = out
 }
 
+for (let i = 0; i < likeBtns.length; i++) {
+    likeBtns[i].onclick = function() {
 
-function saveComs() {
-    localStorage.setItem('comments', JSON.stringify(comments))
-}
-
-function loadComs() {
-    if (JSON.parse(localStorage.getItem('comments'))) {
-        comments = JSON.parse(localStorage.getItem('comments'))
+        comments[i].pressed = !comments[i].pressed;
+        comments[i].pressed ? comments[i].likes++ : comments[i].likes--;
+           
+        clearLS()
+        saveComs()
     }
-    showComs()
 }
 
-function clearLS() {
-    localStorage.clear()
-}
-
-console.log(localStorage)
 
 
 
+let deleteIcons = document.querySelectorAll(".comment__delete-btn");
+    for (let i = 0; i < deleteIcons.length; i++) {
+        deleteIcons[i].addEventListener("click", function (e) {
+            e.preventDefault()
+            this.parentElement.parentElement.style.display = "none"
+            comments.splice(i, 1)
+            clearLS()
+            saveComs()
+    });
+    }
 
-// let form = document.querySelector('.form')
-// let check = 0;
-
-// document.querySelector('.open').onclick = function(){
-    
-
-//     check ? form.classList?.add("hidden") : form.classList?.remove("hidden")
-    
-//     check = Math.abs(check-1)
-// }

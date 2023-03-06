@@ -48,20 +48,14 @@ body
 .form
     display: flex
     justify-content: center
-    //background-color: rgb(59, 12, 12)
     flex-direction: column
     padding: 50px
     *
         margin-bottom: 15px
 
     .input
+        min-width: 380px
         padding: 10px
-
-    textarea
-        max-width: 378px
-        min-width: 378px
-        min-height: 20px
-        max-height: 300px
 
     .btn
         padding: 8px
@@ -81,3 +75,11 @@ body
 
     &__author
         padding-bottom: 20px
+
+    &__delete-btn, &__like-btn
+        background-color: $accent
+        border: 0px
+        cursor: pointer
+        img
+            width: 30px
+            height: 30px

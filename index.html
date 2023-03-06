@@ -9,23 +9,23 @@
 </head>
 <body>
     <div class="content">
-        <button onclick='clearLS()'>clear local storage</button>
-        
         <form class="form">            
             <h2>Create comment</h2>
     
             <input
                 class="form__author input"
                 type="text"
-                placeholder="Name Surname"
+                placeholder="Username"
+                required
             >
     
-            <textarea class="form__comment input" type="text"></textarea>
+            <input class="form__comment input" type="text" required>
     
             <input
                 placeholder="Date"
                 class="form__date input"
                 type="date"
+                required
             >
     
             <div class="form__alert">
@@ -45,7 +45,7 @@
         </form>
     
         <div class="comments">
-    
+            
         </div>
     </div>
     

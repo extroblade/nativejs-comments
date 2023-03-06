@@ -40,13 +40,8 @@ body {
   margin-bottom: 15px;
 }
 .form .input {
+  min-width: 380px;
   padding: 10px;
-}
-.form textarea {
-  max-width: 378px;
-  min-width: 378px;
-  min-height: 20px;
-  max-height: 300px;
 }
 .form .btn {
   padding: 8px;
@@ -64,4 +59,13 @@ body {
 }
 .comment__author {
   padding-bottom: 20px;
+}
+.comment__delete-btn, .comment__like-btn {
+  background-color: rgb(63, 55, 175);
+  border: 0px;
+  cursor: pointer;
+}
+.comment__delete-btn img, .comment__like-btn img {
+  width: 30px;
+  height: 30px;
 }/*# sourceMappingURL=styles.css.map */
