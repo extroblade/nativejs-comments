@@ -39,21 +39,35 @@ body {
   justify-content: center;
   flex-direction: column;
   padding: 50px;
+  padding-bottom: 10px;
 }
 .form * {
   margin-bottom: 15px;
 }
+.form__alert {
+  margin-bottom: 0;
+}
 .form .input {
   min-width: 380px;
   padding: 10px;
+  border-radius: 10px;
+}
+.form .btn {
+  cursor: pointer;
+  border: 1px solid rgb(148, 153, 203);
+  border-radius: 50px;
 }
 
 .comment {
   border: 3px dotted black;
   background-color: rgb(148, 153, 203);
-  padding: 40px;
+  padding: 20px;
   margin-bottom: 20px;
   width: 400px;
+  border-radius: 10px;
+}
+.comments {
+  margin-bottom: 30px;
 }
 .comment__date {
   color: rgb(112, 112, 112);
@@ -64,7 +78,7 @@ body {
   color: rgb(47, 47, 47);
 }
 .comment__comment {
-  font-size: 30px;
+  font-size: 25px;
   color: rgb(89, 89, 89);
 }
 .comment__row {

@@ -12,22 +12,25 @@
         <form class="form" onsubmit="return false">            
             <h2>Create comment</h2>
 
-            <label for="form__author input">Username</label>
+            <!-- <label for="form__author input">Username</label> -->
             <input
                 class="form__author input"
                 type="text"
+                placeholder="Username"
                 maxlength="20"
                 required
             >
 
-            <label for="form__comment input">Comment (200 sym.max)</label>
+            <!-- <label for="form__comment input">Comment (200 sym.max)</label> -->
             <input
+                placeholder="Comment"
                 class="form__comment input"
                 type="text"
                 maxlength="200"
                 required
             >
-    
+
+            <!-- <label for="form__date input">Date</label> -->
             <input
                 placeholder="Date"
                 class="form__date input"
@@ -46,11 +49,10 @@
             >
                 Submit
             </button>
-    
-            <button class="form__reset btn">
-                Reset
-            </button>
         </form>
+
+        <hr width="100vw" size="2" color="black" />
+        <br />
     
         <div class="comments">
             

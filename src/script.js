@@ -31,7 +31,10 @@ comField.addEventListener("change", showComs)
 author.addEventListener("input", validate)
 comment.addEventListener("input", validate)
 
-form_submit.addEventListener("click", submit);
+form_submit.addEventListener("click",() => {
+    validate()
+    submit()
+});
 author.addEventListener("keydown", e => {
     if (e.keyCode == 13) submit()
 })
