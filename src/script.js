@@ -129,15 +129,16 @@ function showComs() {
     }
 
     let deleteIcons = document.querySelectorAll(".comment__delete-btn");
+
     for (let i = 0; i < deleteIcons.length; i++) {
         deleteIcons[i].addEventListener("click", function () {
             this.parentElement.parentElement.style.display = "none"
-            comments.splice(i, 1)
-            
-            clearLS()
+            comments.splice(i, 1);
             saveComs()
+            showComs()
         });
     }
+    
 }
 
 
