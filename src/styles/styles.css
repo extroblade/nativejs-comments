@@ -30,6 +30,10 @@ body {
   padding: 0 100px;
 }
 
+.btn {
+  padding: 8px;
+}
+
 .form {
   display: flex;
   justify-content: center;
@@ -43,29 +47,55 @@ body {
   min-width: 380px;
   padding: 10px;
 }
-.form .btn {
-  padding: 8px;
-}
 
 .comment {
-  background-color: rgb(63, 55, 175);
-  padding: 40px 20px;
-  margin: 10px 0;
+  border: 3px dotted black;
+  background-color: rgb(148, 153, 203);
+  padding: 40px;
+  margin-bottom: 20px;
   width: 400px;
 }
 .comment__date {
-  display: flex;
-  justify-content: flex-end;
+  color: rgb(112, 112, 112);
 }
 .comment__author {
-  padding-bottom: 20px;
+  cursor: default;
+  font-size: 15px;
+  color: rgb(47, 47, 47);
+}
+.comment__comment {
+  font-size: 30px;
+  color: rgb(89, 89, 89);
+}
+.comment__row {
+  padding: 20px 10px;
+  padding-top: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.comment__btns {
+  padding: 0px 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
 }
 .comment__delete-btn, .comment__like-btn {
-  background-color: rgb(63, 55, 175);
+  background-color: rgb(148, 153, 203);
   border: 0px;
   cursor: pointer;
 }
 .comment__delete-btn img, .comment__like-btn img {
   width: 30px;
   height: 30px;
+}
+.comment__like-btn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.comment__like-btn .likes {
+  padding: 10px;
+  font-size: 20px;
 }/*# sourceMappingURL=styles.css.map */

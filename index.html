@@ -11,25 +11,33 @@
     <div class="content">
         <form class="form" onsubmit="return false">            
             <h2>Create comment</h2>
-    
+
+            <label for="form__author input">Username</label>
             <input
                 class="form__author input"
                 type="text"
-                placeholder="Username"
+                maxlength="20"
                 required
             >
-    
-            <input class="form__comment input" type="text" required>
+
+            <label for="form__comment input">Comment (200 sym.max)</label>
+            <input
+                class="form__comment input"
+                type="text"
+                maxlength="200"
+                required
+            >
     
             <input
                 placeholder="Date"
                 class="form__date input"
                 type="date"
+                
                 required
             >
     
             <div class="form__alert">
-                <p></p>
+                <p>&nbsp;</p>
             </div>
     
             <button

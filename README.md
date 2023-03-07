@@ -1,7 +1,6 @@
--native js comments
+native js comments
 
 ---
 
-now can add comments with validation
-
-//will add deletion
+- can add / like / delete comments
+- storaging at localeStorage

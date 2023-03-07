@@ -8,7 +8,7 @@ const inputs = Array.from(document.querySelectorAll(".input"))
 const author = document.querySelector('.form__author')
 const comment = document.querySelector('.form__comment')
 const validator = document.querySelector(".form__alert p")
-const comField = document.querySelector('.comments')
+let comField = document.querySelector('.comments')
 
 const day = 1000 * 60 * 60 * 24
 
@@ -23,6 +23,21 @@ comment.onchange = validate
 
 
 loadComs()
+showComs()
+
+
+comField.addEventListener("change", showComs)
+
+author.addEventListener("input", validate)
+comment.addEventListener("input", validate)
+
+form_submit.addEventListener("click", submit);
+author.addEventListener("keydown", e => {
+    if (e.keyCode == 13) submit()
+})
+comment.addEventListener("keydown", e => {
+    if (e.keyCode == 13) submit()
+})
 
 
 function timeChanger(time, h, m) {
@@ -44,7 +59,7 @@ function timeChanger(time, h, m) {
 
 
 function submit(){
-    validate()
+
     let com = {
         author : author.value,
         comment : comment.value,
@@ -56,61 +71,86 @@ function submit(){
     }
 
     if(com.author && com.comment){
+        validator.innerHTML = 'Added successfully'
         comments.push(com)
         saveComs()
+        form_date.valueAsDate = nowD    
+        author.value = ''
+        comment.value = ''
+        showComs()
     }
-
-    showComs()
-}
-
-
-form_submit.onclick = submit
-
-
-author.onkeydown= function(e){
-    if (e.keyCode == 13) submit()
-}
-
-
-comment.onkeydown = function(e){
-    if (e.keyCode == 13) submit()
 }
 
 
 function showComs() {
-    if (comments != null){
+    if (comments.length){
         let out = ''
         comments.map(item => {
-            out += `<div class='comment'>\
-                <div><button class='comment__like-btn'>\
-                <img src="src/static/like${item.pressed ? 'd' : ''}.png" alt="like">\
-                <p>${item.likes}</p>\
-                </button>\
-                <button class='comment__delete-btn'>\
-                <img src="src/static/trash.png" alt="delete">\
-                </button></div>\
-                <p class="comment__date">${timeChanger(item.time, item.hours, item.minutes)}</p>\
-                <p class="comment__author">${(item.author)}</p>\
-                <p class="comment__comment">${(item.comment)}</p>\
+            if(item.author && item.time && item.comment){
+                out +=
+            `<div class='comment'>\
+                    <div class='comment__row'>\
+                        <p class="comment__author">${(item.author)}</p>\
+                        <p class="comment__date">${timeChanger(item?.time, item?.hours, item?.minutes)}</p>\
+                    </div>\
+                    <div class='comment__row'>\
+                        <p class="comment__comment">${(item.comment)}</p>\
+                    </div>\
+                    <div class='comment__btns'>
+                        <button class='comment__like-btn'>\
+                            <img src="src/static/like${item.pressed ? 'd' : ''}.png" alt="like">\
+                            <p class='likes'>${item.likes}</p>\
+                        </button>\
+                        <button class='comment__delete-btn'>\
+                            <img src="src/static/trash.png" alt="delete">\
+                        </button>\
+                    </div>
                 </div>`
+            }
         })
-    
+        
         comField.innerHTML = out
+    }
+
+    let likeBtns = Array.from(document.querySelectorAll(".comment__like-btn"))
+    for (let i = 0; i < likeBtns.length; i++) {
+        likeBtns[i].onclick = function() {
+
+            comments[i].pressed = !comments[i].pressed;
+
+            comments[i].pressed ? comments[i].likes++ :  comments[i].likes--
+
+            localStorage.setItem(`comments[${i}]`, JSON.stringify(comments[i]));
+            showComs()
+        }
+    }
+
+    let deleteIcons = document.querySelectorAll(".comment__delete-btn");
+    for (let i = 0; i < deleteIcons.length; i++) {
+        deleteIcons[i].addEventListener("click", function () {
+            this.parentElement.parentElement.style.display = "none"
+            comments.splice(i, 1)
+            
+            clearLS()
+            saveComs()
+        });
     }
 }
 
 
 function saveComs() {
-    localStorage.setItem('comments', JSON.stringify(comments))
+    clearLS()
+    comments.map((item, index) => {
+        localStorage.setItem(`comments[${index}]`, JSON.stringify(item))
+    })
 }
+    
 
 
 function loadComs() {
-    if (JSON.parse(localStorage.getItem('comments'))) {
-        comments = JSON.parse(localStorage.getItem('comments'))
-        showComs()
+    for(let i=0; i<localStorage.length; i++){
+        comments[i] = JSON.parse(localStorage.getItem(`comments[${i}]`))
     }
-    
 }
 
 
@@ -135,48 +175,8 @@ function validate() {
         validator.innerHTML = "Input not valid"
         return false
     } else {
-        validator.innerHTML = "Added successfully"
+        validator.innerHTML = "&nbsp;"
         return true
     }
 }
-
-
-let likeBtns = Array.from(document.querySelectorAll(".comment__like-btn"))
-let likeBtnsP = Array.from(document.querySelectorAll(".comment__like-btn p"))
-console.log(comments)
-
-
-
-
-for (let i = 0; i < likeBtns.length; i++) {
-    likeBtns[i].onclick = function() {
-
-        comments[i].pressed = !comments[i].pressed;
-
-        if(comments[i].pressed){
-            comments[i].likes++
-            likeBtns[i].classList.add("liked");
-        } else {
-            comments[i].likes--
-            likeBtns[i].classList.remove("liked");
-        }
-        clearLS()
-        saveComs()
-        showComs()
-    }
-}
-
-
-
-
-let deleteIcons = document.querySelectorAll(".comment__delete-btn");
-    for (let i = 0; i < deleteIcons.length; i++) {
-        deleteIcons[i].addEventListener("click", function (e) {
-            e.preventDefault()
-            this.parentElement.parentElement.style.display = "none"
-            comments.splice(i, 1)
-            clearLS()
-            saveComs()
-    });
-    }
 
