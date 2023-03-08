@@ -8,6 +8,8 @@
     
     
 $accent: rgb(148, 153, 203)
+$body: rgba(189, 189, 189, 0.418)
+$error: rgb(134, 31, 28)
 
 
 //-----------------commons------------------
@@ -16,21 +18,18 @@ $accent: rgb(148, 153, 203)
 html
     block-sizing: border-box
 
-
 *, *::after, *::before
     box-sizing: inherit
     padding: 0
     margin: 0
 
-
 body
-    background-color: rgba(189, 189, 189, 0.418)
+    background-color: $body
     font-family: 'Roboto', sans-serif
     overflow-x: hidden
 
 .error
-    border: 5px solid rgb(134, 31, 28)
-
+    border: 5px solid $error
 
 .hidden
     display: none !important
@@ -68,9 +67,8 @@ body
         border-radius: 50px
 
 
-
-
 //-----------------comments------------------
+
 
 .comment
     border: 3px dotted black
@@ -86,13 +84,14 @@ body
     &__date
         color: rgb(112, 112, 112)
 
-
     &__author
         cursor: default
         font-size: 15px
         color: rgb(47, 47, 47)
         
     &__comment
+        inline-size: 100%
+        overflow-wrap: break-word
         font-size: 25px
         color: rgb(89, 89, 89)
         
@@ -110,7 +109,6 @@ body
         justify-content: space-between
         align-items: baseline
 
-
     &__delete-btn, &__like-btn
         background-color: $accent
         border: 0px
@@ -118,7 +116,6 @@ body
         img
             width: 30px
             height: 30px
-
 
     &__like-btn
         display: flex

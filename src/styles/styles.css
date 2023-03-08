@@ -78,6 +78,8 @@ body {
   color: rgb(47, 47, 47);
 }
 .comment__comment {
+  inline-size: 100%;
+  overflow-wrap: break-word;
   font-size: 25px;
   color: rgb(89, 89, 89);
 }

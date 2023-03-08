@@ -16,7 +16,7 @@ form_date.valueAsDate = new Date()
 
 let date = Date.parse(form_date.value)
 let now = Date.now()
-let dif = Date.now() - date
+let dif = now - date
 let nowD = new Date(now)
 author.onchange = validate
 comment.onchange = validate
@@ -28,16 +28,20 @@ showComs()
 
 comField.addEventListener("change", showComs)
 
+
 author.addEventListener("input", validate)
 comment.addEventListener("input", validate)
+
 
 form_submit.addEventListener("click",() => {
     validate()
     submit()
 });
+
 author.addEventListener("keydown", e => {
     if (e.keyCode == 13) submit()
 })
+
 comment.addEventListener("keydown", e => {
     if (e.keyCode == 13) submit()
 })
@@ -62,7 +66,8 @@ function timeChanger(time, h, m) {
 
 
 function submit(){
-
+    now = Date.now()
+    nowD = new Date(now)
     let com = {
         author : author.value,
         comment : comment.value,
@@ -150,7 +155,6 @@ function saveComs() {
 }
     
 
-
 function loadComs() {
     for(let i=0; i<localStorage.length; i++){
         comments[i] = JSON.parse(localStorage.getItem(`comments[${i}]`))
@@ -183,4 +187,3 @@ function validate() {
         return true
     }
 }
-
