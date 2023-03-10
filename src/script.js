@@ -57,10 +57,12 @@ function timeChanger(time, h, m) {
     let hours = h < 10 ? `0${h}` : h
     let minutes = m < 10 ? `0${m}` : m
     let hoursAndMinutes = ` ${hours}:${minutes}`
+
+    let t = time + (3600 * 1000 * h) + (60 * 1000 * m)
     
     if (now-time < now-today ){
         time = 'today,'
-    } else if (now-time >= now-today && now-time <= (now-today)+day) {
+    } else if (now-t >= now-today && now-t <= (now-today)+day) {
         time = 'yesterday,'
     } else time = `${days} days ago,`
 
