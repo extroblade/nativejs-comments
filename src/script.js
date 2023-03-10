@@ -15,7 +15,7 @@ const day = 1000 * 60 * 60 * 24
 form_date.valueAsDate = new Date()
 console.log(form_date.valueAsDate)
 const today = Date.parse(form_date.valueAsDate)
-console.log(today + 'v3')
+console.log(today + 'v4')
 
 let date = Date.parse(form_date.value)
 let now = Date.now()
@@ -64,10 +64,12 @@ function timeChanger(time, h, m) {
     console.log(today + ' today')
 
 
-    if (now-t < now-today ){
+    if (now-t < now-today && t <= now){
         time = 'today,'
     } else if (now-t >= now-today && now-t <= (now-today)+day) {
         time = 'yesterday,'
+    } else if (t > now){
+        time = 'future,'
     } else time = `${days} days ago,`
 
     return time+hoursAndMinutes
