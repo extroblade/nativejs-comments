@@ -15,7 +15,7 @@ const day = 1000 * 60 * 60 * 24
 form_date.valueAsDate = new Date()
 console.log(form_date.valueAsDate)
 const today = Date.parse(form_date.valueAsDate)
-console.log(today)
+console.log(today + 'v1')
 
 let date = Date.parse(form_date.value)
 let now = Date.now()
@@ -58,7 +58,7 @@ function timeChanger(time, h, m) {
     let minutes = m < 10 ? `0${m}` : m
     let hoursAndMinutes = ` ${hours}:${minutes}`
 
-    let t = time + (3600 * 1000 * h) + (60 * 1000 * m)
+    let t = time + (3600 * 1000 * h) + (60 * 1000 * m) - 4 * 3600 * 1000
     
     if (now-time < now-today ){
         time = 'today,'
@@ -76,7 +76,7 @@ function submit(){
     let com = {
         author : author.value,
         comment : comment.value,
-        time : Date.parse(form_date.value) + (3600 * 1000 * nowD.getHours()) + (60 * 1000 * nowD.getMinutes()),
+        time : Date.parse(form_date.value), // + (3600 * 1000 * nowD.getHours()) + (60 * 1000 * nowD.getMinutes())
         likes: 0,
         pressed: false,
         hours: nowD.getHours(),
