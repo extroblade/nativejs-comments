@@ -58,7 +58,7 @@ function timeChanger(time, h, m) {
     let minutes = m < 10 ? `0${m}` : m
     let hoursAndMinutes = ` ${hours}:${minutes}`
 
-    let t = time + (3600 * 1000 * h) + (60 * 1000 * m) - 4 * 3600 * 1000
+    let t = time + (3600 * 1000 * h) + (60 * 1000 * m) + 4 * 3600 * 1000
     
     if (now-time < now-today ){
         time = 'today,'
