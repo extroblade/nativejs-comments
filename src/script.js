@@ -15,7 +15,7 @@ const day = 1000 * 60 * 60 * 24
 form_date.valueAsDate = new Date()
 console.log(form_date.valueAsDate)
 const today = Date.parse(form_date.valueAsDate)
-console.log(today + 'v1')
+console.log(today + 'v2')
 
 let date = Date.parse(form_date.value)
 let now = Date.now()
