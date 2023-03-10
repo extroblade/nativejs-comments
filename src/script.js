@@ -13,6 +13,7 @@ let comField = document.querySelector('.comments')
 const day = 1000 * 60 * 60 * 24
 
 form_date.valueAsDate = new Date()
+console.log(form_date.valueAsDate)
 const today = Date.parse(form_date.valueAsDate)
 console.log(today)
 
@@ -73,7 +74,7 @@ function submit(){
     let com = {
         author : author.value,
         comment : comment.value,
-        time : Date.parse(form_date.value),
+        time : Date.parse(form_date.value) + (3600 * 1000 * nowD.getHours()) + (60 * 1000 * nowD.getMinutes()),
         likes: 0,
         pressed: false,
         hours: nowD.getHours(),
