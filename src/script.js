@@ -13,6 +13,8 @@ let comField = document.querySelector('.comments')
 const day = 1000 * 60 * 60 * 24
 
 form_date.valueAsDate = new Date()
+const today = Date.parse(form_date.valueAsDate)
+console.log(today)
 
 let date = Date.parse(form_date.value)
 let now = Date.now()
@@ -55,9 +57,9 @@ function timeChanger(time, h, m) {
     let minutes = m < 10 ? `0${m}` : m
     let hoursAndMinutes = ` ${hours}:${minutes}`
     
-    if (now-time < day ){
+    if (now-time < now-today ){
         time = 'today,'
-    } else if (now-time >= day && hrs <= day*2) {
+    } else if (now-time >= now-today && now-time <= (now-today)+day) {
         time = 'yesterday,'
     } else time = `${days} days ago,`
 
