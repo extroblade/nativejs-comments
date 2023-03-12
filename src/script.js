@@ -18,7 +18,7 @@ const today = Date.parse(form_date.valueAsDate)
 let date = Date.parse(form_date.value)
 let now = Date.now()
 let dif = now - date
-let nowD = new Date(now)
+let nowD = new Date(now).toUTCString()
 author.onchange = validate
 comment.onchange = validate
 
@@ -63,7 +63,7 @@ function timeChanger(time, h, m) {
         time = 'today,'
     } else if (now-t >= now-today && now-t <= (now-today)+day) {
         time = 'yesterday,'
-    } else if (t > now){
+    } else if (t > now+4*3600*1000){
         time = 'future,'
     } else time = `${days} days ago,`
 
