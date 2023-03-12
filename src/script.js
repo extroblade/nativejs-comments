@@ -63,7 +63,7 @@ function timeChanger(time, h, m) {
         time = 'today,'
     } else if (now-t >= now-today && now-t <= (now-today)+day) {
         time = 'yesterday,'
-    } else if (t > now+4*3600*1000){
+    } else if (t > now+day){
         time = 'future,'
     } else time = `${days} days ago,`
 
